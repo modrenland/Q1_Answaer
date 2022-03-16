@@ -1,0 +1,252 @@
+public class Node {
+    int no;
+    Node next;
+}
+public class StackNode {
+    int info;
+    StackNode link;
+}
+public class Stack_Dynamic {
+    StackNode Top;
+    
+    public void CreatStack(){
+        Top=null;
+    }
+    
+    public void DestroyStack(){
+        Top=null;
+    }
+    
+    public boolean EmptyStack(){
+        return(Top==null);
+    }
+    
+    public void PrintStack(){
+        StackNode ptr=Top;
+        while(ptr!=null){
+            System.out.println(ptr.info);
+            ptr=ptr.link;
+        }
+    }
+    
+    public void Push(int value){
+        StackNode Ptr=new StackNode();
+        Ptr.info=value;
+
+        Ptr.link=Top;
+        Top=Ptr;
+    }
+    
+    public int pop(){
+        int value=Top.info;
+        Top=Top.link;
+        return value;
+    }
+     
+}
+public class LinkListQ1 {
+    private Node list;
+    private Node location;
+    private Node predloc;
+    private Node fow;
+    Stack_Dynamic Stack1=new Stack_Dynamic();
+    
+    void CreateList(){
+ //        function to create new list 
+
+        list = null;
+    }
+    
+    void DestroyList(){
+//        funciton to destroy all the list
+
+        list = null;
+    }
+    
+    boolean Emptylist(){
+//        function to check if the list is empty
+        if(list==null) 
+            return true;
+        else
+            return false;
+    }
+
+    void FindElement(int key) {
+//        function to search for an element using a given key
+        location = list;
+        predloc = null;
+        while(location != null){
+            if (location.no == key) break;
+            else
+                if(location.no > key) location = null;
+                else {
+                    predloc = location;
+                    location = location.next;
+                }
+        }
+    }
+    
+    
+    
+    
+    void PrintList(){
+//      function to print all the list
+
+        Node ptr = list;
+        while(ptr != null){
+            System.out.println(ptr.no);
+            ptr = ptr.next;
+        }
+    }
+    
+    void DeleteElement(int key){
+   //      function to delete an element from the list
+
+        FindElement(key);
+        if(location == null)
+            System.out.println("This Element Is Not Found");
+        else {
+            if(predloc == null)
+                list=location.next;
+            else
+                predloc.next = location.next;
+        }
+    }
+    
+   
+ 
+     void InsertElement(int key){  
+//      function to insert new node to the list
+
+        Node ptr;
+        FindElement(key);
+        if(location!= null) 
+            System.out.println("This Element Is Found");
+        else{
+            ptr = new Node();
+            ptr.no = key;
+            System.out.println("Added Successfully!");
+            if (predloc == null){
+                ptr.next = list;
+                list = ptr;
+            }
+            else{
+                ptr.next = predloc.next;
+                predloc.next = ptr;
+            }
+        }
+    }
+       
+boolean test(){
+  int Sp,sn,cp,cn;
+      Sp=sn=cp=cn=0;
+     Node ptr=list;
+         while(ptr!=null){
+             if(ptr.no>0){
+             Sp+=ptr.no;
+             cp++;  }
+             else{
+             sn+=ptr.no;
+             cn++;
+                
+                }
+                ptr=ptr.next;
+    }
+   if(cp==0&&cn!=0)
+   return false; 
+   if(cp!=00&&cn==0)
+      return true; 
+   if(cp>0&&cn>0&&Sp/cp>sn/cn)
+   
+    
+     return true;
+     else 
+     return false; 
+    
+}
+
+   void Reverselist(){
+       
+     Node ptr=list;
+     while (ptr!=null){
+     Stack1.Push(ptr.no);
+     ptr=ptr.next;
+      }
+     Node P=list; //restart thr pointer
+      while (P!=null){
+        P.no=Stack1.pop();
+        P=P.next;
+        }
+}
+}
+import java.util.Scanner;
+
+public class MainQ1 {
+    public static void main(String[] args) {
+         Scanner sc = new Scanner(System.in);
+        LinkListQ1 list1 = new LinkListQ1();
+        LinkListQ1 list2 = new LinkListQ1();
+        LinkListQ1 list3 = new LinkListQ1();
+        int choice; 
+        int number;
+      
+      
+        
+        list1.CreateList();
+        while(true){
+            
+            displayMenu();
+             choice=sc.nextInt();
+          switch(choice){
+                case 1:
+                    System.out.println("Enter number: ");
+                    number = sc.nextInt();
+                    list1.InsertElement(number);
+                    break;
+                    case 2:
+                    if(list1.Emptylist()==true)
+                        System.out.println("The list is empty!");
+                    else{
+                        if (list1.test()==true){
+                        list1=list2;
+                        list1.DestroyList();
+                        System.out.println("Added Successfully!List2");
+                        }
+                        else{
+                        list1=list3;
+                        list1.DestroyList();
+                        System.out.println("Added Successfully!List3");
+                        }
+                        
+                    }
+                    break;
+        
+                    
+                case 3: 
+                    if(list1.Emptylist()==true)
+                        System.out.println("The list is empty");
+                    else{
+                        list1.Reverselist();
+                        list1.PrintList();}
+                        
+                    break;
+                    
+                case 4:
+                    System.out.println("Good Bye!");
+                    System.exit(0);
+                    
+                default: 
+                    System.out.println("Invalid choice. Try again!");
+        
+    }
+     }
+     
+                                                       }
+      public static void displayMenu(){
+     System.out.println();
+     System.out.println("1. Insert Element");
+     System.out.println("2. test the list ");
+     System.out.println("3. Reverse the list  ");
+     System.out.println("4. Exi");
+     System.out.println("Your choice: "); }
+    }
